@@ -2,10 +2,24 @@
 import {Component} from 'react'
 import {Link,Outlet} from 'react-router-dom'
 import { connect } from 'react-redux';
+import { createHashHistory } from "history";
 // 动作层的拆离
 import { increase,decrease } from '../actions/count';
 
-class Tab extends Component {	
+class Tab extends Component {
+	componentDidMount(){
+		let params=this.paramsFormat()
+		console.log(params)
+	}
+	
+	paramsFormat(){
+		let history=createHashHistory(),search=history.location.search.slice(1),obj={}
+		search.split('&').forEach(v=>{
+			obj[v.split('=')[0]]=v.split('=')[1]
+		})
+		return obj
+	}
+	
 	render(){
 		const { count, increase } = this.props;
 		return (
